@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 import MealItem from "../components/MealItem";
-import { MEALS } from "../data/dummy-data";
+import { CATEGORIES, MEALS } from "../data/dummy-data";
 
-const MealsOverViewScreen = ({ route }: any) => {
+const MealsOverViewScreen = ({ route, navigation }: any) => {
   const [id, setId] = useState<any>();
 
   const showMeals = MEALS.filter((item) => {
@@ -19,6 +19,11 @@ const MealsOverViewScreen = ({ route }: any) => {
       setId(route.params.categoryId);
     }
   }, [route.params.categoryId]);
+
+  useLayoutEffect(() => {
+    const Title = CATEGORIES.find((item) => item.id === id)?.title;
+    navigation.setOptions({ title: Title });
+  }, [id, navigation]);
 
   return (
     <View style={styles.container}>
