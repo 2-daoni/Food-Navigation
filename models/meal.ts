@@ -3,10 +3,10 @@ class Meal {
   categoryIds: any;
   title: any;
   affordability: any;
+  ingredients: any;
   complexity: any;
   imageUrl: any;
   duration: any;
-  ingredients: any;
   steps: any;
   isGlutenFree: any;
   isVegan: any;
