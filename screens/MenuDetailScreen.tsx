@@ -1,30 +1,47 @@
-import { useLayoutEffect } from "react";
-import { Button, FlatList, Image, StyleSheet, Text, View } from "react-native";
-import IconBtn from "../components/IconBtn";
+import { useContext, useLayoutEffect } from "react";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { FavoriteContext } from "../store/context/favorite-context";
 import { MEALS } from "../data/dummy-data";
+import IconBtn from "../components/IconBtn";
 
 const MenuDetailScreen = ({ navigation, route }: any) => {
-  const item = MEALS.find((item: any) => item.id === route.params.id);
+  const mealId = route.params.id;
+
+  const favoriteMealsContext = useContext(FavoriteContext);
+
+  const isFavorite = favoriteMealsContext.ids.includes(mealId);
+
+  const item = MEALS.find((item: any) => item.id === mealId);
 
   const renderItem = ({ item }: any) => {
     return <Text style={styles.text}>- {item}</Text>;
   };
 
   const handleHeaderBtn = () => {
-    console.log("kk");
+    if (isFavorite) {
+      favoriteMealsContext.removeFavorite(mealId);
+    } else {
+      favoriteMealsContext.addFavorite(mealId);
+    }
   };
 
   useLayoutEffect(() => {
     navigation.setOptions({ title: route.params.title });
-  }, [route.params.id, navigation]);
+  }, [mealId, navigation]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
-        return <IconBtn icon="heart" color="white" onPress={handleHeaderBtn} />;
+        return (
+          <IconBtn
+            icon={isFavorite ? "heart" : "heart-outline"}
+            color="white"
+            onPress={handleHeaderBtn}
+          />
+        );
       },
     });
-  }, [navigation, handleHeaderBtn]);
+  }, [navigation, handleHeaderBtn, isFavorite]);
 
   return (
     <View style={styles.container}>

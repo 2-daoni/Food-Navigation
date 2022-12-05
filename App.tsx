@@ -5,12 +5,11 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
-import CategoryMainScreen from "./screens/CategoryMainScreen";
-import DummyScreen from "./screens/DummyScreen";
 import CategoryScreen from "./screens/CategoryScreen";
 import MealsOverViewScreen from "./screens/MealsOverViewScreen";
 import MenuDetailScreen from "./screens/MenuDetailScreen";
 import FavoriteScreen from "./screens/FavoriteScreen";
+import FavoritesContextProvider from "./store/context/favorite-context";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -69,29 +68,31 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            ...navigatorOptions,
-          }}
-        >
-          <Stack.Screen
-            name="DrawerNavigation"
-            component={DrawerNavigation}
-            options={{ headerShown: false, title: "Category" }}
-          />
-          <Stack.Screen
-            name="MealsOverViewScreen"
-            component={MealsOverViewScreen}
-            options={{ title: "메뉴 모아보기" }}
-          />
-          <Stack.Screen
-            name="MenuDetailScreen"
-            component={MenuDetailScreen}
-            options={{ title: "메뉴 상세보기" }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <FavoritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              ...navigatorOptions,
+            }}
+          >
+            <Stack.Screen
+              name="DrawerNavigation"
+              component={DrawerNavigation}
+              options={{ headerShown: false, title: "Category" }}
+            />
+            <Stack.Screen
+              name="MealsOverViewScreen"
+              component={MealsOverViewScreen}
+              options={{ title: "메뉴 모아보기" }}
+            />
+            <Stack.Screen
+              name="MenuDetailScreen"
+              component={MenuDetailScreen}
+              options={{ title: "메뉴 상세보기" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 }
