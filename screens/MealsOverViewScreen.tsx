@@ -11,7 +11,7 @@ const MealsOverViewScreen = ({ route, navigation }: any) => {
   });
 
   const renderItem = (item: any) => {
-    return <MealItem item={item.item} />;
+    return <MealItem item={item.item} navigation={navigation} />;
   };
 
   useEffect(() => {

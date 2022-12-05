@@ -10,22 +10,34 @@ import {
 type ItemTypes = {
   id: any;
   title: any;
+  categoryIds: any;
   ingredients: any;
   duration: any;
   affordability: any;
   complexity: any;
-
   imageUrl: any;
   isVegan: any;
   isVegetarian: any;
 };
 
-type Props = { item: ItemTypes };
+type Props = { item: ItemTypes; navigation: any };
 
-const MealItem = ({ item }: Props) => {
+const MealItem = ({ item, navigation }: Props) => {
+  const handlePress = () => {
+    navigation.navigate("MenuDetailScreen", {
+      title: item.title,
+      id: item.id,
+    });
+  };
+
   return (
     <View style={styles.mealItem}>
-      <Pressable style={({ pressed }) => pressed && styles.pressedBtn}>
+      <Pressable
+        style={({ pressed }) => pressed && styles.pressedBtn}
+        onPress={() => {
+          handlePress();
+        }}
+      >
         <View style={styles.innerContainer}>
           <Image source={{ uri: item.imageUrl }} style={styles.image} />
           <Text style={styles.title}>{item.title}</Text>
