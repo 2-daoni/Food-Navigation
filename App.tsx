@@ -1,38 +1,59 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CategoryScreen from "./screens/CategoryScreen";
-import MealsOverViewScreen from "./screens/MealsOverViewScreen";
-import MenuDetailScreen from "./screens/MenuDetailScreen";
+import { Ionicons } from "@expo/vector-icons";
+import CategoryMainScreen from "./screens/CategoryMainScreen";
+import DummyScreen from "./screens/DummyScreen";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const drawerOptions: any = {
+  drawerStyle: {
+    backgroundColor: "#111111",
+  },
+  headerStyle: {
+    backgroundColor: "black",
+  },
+  headerTintColor: "white",
+  drawerInactiveTintColor: "white",
+  drawerActiveTintColor: "#dad",
+  drawerActiveBackgroundColor: "transparent",
+};
 
 export default function App() {
   return (
     <>
       <StatusBar style="light" />
       <NavigationContainer>
-        <Stack.Navigator
+        <Drawer.Navigator
           screenOptions={{
-            headerStyle: {
-              backgroundColor: "#111",
-            },
-            headerTintColor: "white",
-            contentStyle: { backgroundColor: "#111" },
+            ...drawerOptions,
           }}
         >
-          <Stack.Screen
-            name="CategoryScreen"
-            component={CategoryScreen}
-            options={{ title: "메뉴카테고리" }}
+          <Drawer.Screen
+            name="CategoryMainScreen"
+            component={CategoryMainScreen}
+            options={{
+              drawerLabel: "Menu Category",
+              drawerIcon: ({ color }) => (
+                <Ionicons name="home" color={color} size={18} />
+              ),
+            }}
           />
-          <Stack.Screen
-            name="MealsOverViewScreen"
-            component={MealsOverViewScreen}
+          <Drawer.Screen
+            name="DummyScreen"
+            component={DummyScreen}
+            options={{
+              drawerLabel: "I am dummy!",
+              drawerIcon: ({ color }) => (
+                <Ionicons name="person" color={color} size={18} />
+              ),
+            }}
           />
-          <Stack.Screen name="MenuDetailScreen" component={MenuDetailScreen} />
-        </Stack.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     </>
   );
