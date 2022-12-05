@@ -6,7 +6,7 @@ const MenuDetailScreen = ({ navigation, route }: any) => {
   const item = MEALS.find((item: any) => item.id === route.params.id);
 
   const renderItem = ({ item }: any) => {
-    return <Text style={styles.text}>-{item}</Text>;
+    return <Text style={styles.text}>- {item}</Text>;
   };
 
   useLayoutEffect(() => {
@@ -22,6 +22,11 @@ const MenuDetailScreen = ({ navigation, route }: any) => {
         </Text>
       </View>
       <Image source={{ uri: item?.imageUrl }} style={styles.image} />
+      <View style={styles.rowContainer}>
+        <Text style={styles.smallDescription}>{item?.complexity}</Text>
+        <Text style={styles.smallDescription}>{item?.duration}</Text>
+        <Text style={styles.smallDescription}>{item?.affordability}</Text>
+      </View>
       <View>
         <Text style={styles.middleTitle}>Ingredients</Text>
         <FlatList
@@ -77,5 +82,15 @@ const styles = StyleSheet.create({
   highlight: {
     color: "#dea3a3",
     fontWeight: "bold",
+  },
+  rowContainer: {
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  smallDescription: {
+    margin: 5,
+    fontSize: 14,
+    color: "white",
   },
 });

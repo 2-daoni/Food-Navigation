@@ -50,9 +50,6 @@ const MealItem = ({ item, navigation }: Props) => {
               {item.affordability.toUpperCase()}
             </Text>
           </View>
-          {/* {item.ingredients.map((item: any) => (
-          <Text>{item}</Text>
-        ))} */}
         </View>
       </Pressable>
     </View>
