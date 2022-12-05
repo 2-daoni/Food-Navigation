@@ -1,11 +1,4 @@
-import {
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 type ItemTypes = {
   id: any;
@@ -20,7 +13,7 @@ type ItemTypes = {
   isVegetarian: any;
 };
 
-type Props = { item: ItemTypes; navigation: any };
+type Props = { item: ItemTypes; navigation?: any };
 
 const MealItem = ({ item, navigation }: Props) => {
   const handlePress = () => {

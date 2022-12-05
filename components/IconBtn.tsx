@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
   onPress: () => void;
-  icon: "star" | "heart";
+  icon: "heart-outline" | "heart";
   color: string;
 };
 
