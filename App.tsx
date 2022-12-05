@@ -2,25 +2,67 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import CategoryMainScreen from "./screens/CategoryMainScreen";
 import DummyScreen from "./screens/DummyScreen";
+import CategoryScreen from "./screens/CategoryScreen";
+import MealsOverViewScreen from "./screens/MealsOverViewScreen";
+import MenuDetailScreen from "./screens/MenuDetailScreen";
+import FavoriteScreen from "./screens/FavoriteScreen";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
-const drawerOptions: any = {
-  drawerStyle: {
-    backgroundColor: "#111111",
-  },
+const navigatorOptions: any = {
   headerStyle: {
-    backgroundColor: "black",
+    backgroundColor: "#111",
   },
   headerTintColor: "white",
+  contentStyle: { backgroundColor: "#111" },
+};
+
+const drawerOptions: any = {
+  sceneContainerStyle: {
+    backgroundColor: "#111",
+  },
+  drawerContentStyle: { backgroundColor: "#111" },
   drawerInactiveTintColor: "white",
   drawerActiveTintColor: "#dad",
-  drawerActiveBackgroundColor: "transparent",
+};
+
+const DrawerNavigation = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        ...navigatorOptions,
+        ...drawerOptions,
+      }}
+    >
+      <Drawer.Screen
+        name="CategoryScreen"
+        component={CategoryScreen}
+        options={{
+          title: "Category",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="FavoriteScreen"
+        component={FavoriteScreen}
+        options={{
+          title: "Favorite",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="star" color={color} size={size} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
 };
 
 export default function App() {
@@ -28,32 +70,27 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <NavigationContainer>
-        <Drawer.Navigator
+        <Stack.Navigator
           screenOptions={{
-            ...drawerOptions,
+            ...navigatorOptions,
           }}
         >
-          <Drawer.Screen
-            name="CategoryMainScreen"
-            component={CategoryMainScreen}
-            options={{
-              drawerLabel: "Menu Category",
-              drawerIcon: ({ color }) => (
-                <Ionicons name="home" color={color} size={18} />
-              ),
-            }}
+          <Stack.Screen
+            name="DrawerNavigation"
+            component={DrawerNavigation}
+            options={{ headerShown: false, title: "Category" }}
           />
-          <Drawer.Screen
-            name="DummyScreen"
-            component={DummyScreen}
-            options={{
-              drawerLabel: "I am dummy!",
-              drawerIcon: ({ color }) => (
-                <Ionicons name="person" color={color} size={18} />
-              ),
-            }}
+          <Stack.Screen
+            name="MealsOverViewScreen"
+            component={MealsOverViewScreen}
+            options={{ title: "메뉴 모아보기" }}
           />
-        </Drawer.Navigator>
+          <Stack.Screen
+            name="MenuDetailScreen"
+            component={MenuDetailScreen}
+            options={{ title: "메뉴 상세보기" }}
+          />
+        </Stack.Navigator>
       </NavigationContainer>
     </>
   );
