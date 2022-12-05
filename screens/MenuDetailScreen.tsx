@@ -1,5 +1,6 @@
 import { useLayoutEffect } from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, Image, StyleSheet, Text, View } from "react-native";
+import IconBtn from "../components/IconBtn";
 import { MEALS } from "../data/dummy-data";
 
 const MenuDetailScreen = ({ navigation, route }: any) => {
@@ -9,9 +10,21 @@ const MenuDetailScreen = ({ navigation, route }: any) => {
     return <Text style={styles.text}>- {item}</Text>;
   };
 
+  const handleHeaderBtn = () => {
+    console.log("kk");
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({ title: route.params.title });
   }, [route.params.id, navigation]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return <IconBtn icon="heart" color="white" onPress={handleHeaderBtn} />;
+      },
+    });
+  }, [navigation, handleHeaderBtn]);
 
   return (
     <View style={styles.container}>
